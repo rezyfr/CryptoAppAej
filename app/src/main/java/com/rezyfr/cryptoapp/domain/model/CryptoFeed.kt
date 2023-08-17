@@ -1,4 +1,4 @@
-package com.rezyfr.cryptoapp.domain
+package com.rezyfr.cryptoapp.domain.model
 
 data class CryptoFeed(
     val coinInfo: CoinInfo,

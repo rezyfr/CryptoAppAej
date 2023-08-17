@@ -24,7 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.rezyfr.cryptoapp.domain.CryptoFeed
+import com.rezyfr.cryptoapp.domain.model.CryptoFeed
 
 @Composable
 fun CryptoFeedList(

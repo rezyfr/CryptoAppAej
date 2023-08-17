@@ -6,23 +6,23 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.rezyfr.cryptoapp.domain.CryptoFeed
-import com.rezyfr.cryptoapp.domain.CryptoFeedRemoteUseCase
-import com.rezyfr.cryptoapp.domain.InvalidData
-import com.rezyfr.cryptoapp.domain.NoConnectivity
-import com.rezyfr.cryptoapp.domain.UiResult
-import com.rezyfr.cryptoapp.domain.UnexpectedValueRepresentation
+import com.rezyfr.cryptoapp.domain.model.CryptoFeed
+import com.rezyfr.cryptoapp.domain.model.InvalidData
+import com.rezyfr.cryptoapp.domain.model.NoConnectivity
+import com.rezyfr.cryptoapp.domain.model.UiResult
+import com.rezyfr.cryptoapp.domain.model.UnexpectedValueRepresentation
 import com.rezyfr.cryptoapp.factories.CryptoFeedCompositeFactory
 import com.rezyfr.cryptoapp.factories.CryptoFeedRemoteUseCaseFactory
-import com.rezyfr.cryptoapp.http.CryptoFeedLoader
-import com.rezyfr.cryptoapp.presentation.CryptoFeedUiState.Initial.isLoading
+import com.rezyfr.cryptoapp.domain.CryptoFeedLoader
+import com.rezyfr.cryptoapp.domain.di.CompositeLoader
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 sealed interface CryptoFeedUiState {
     val isLoading: Boolean
@@ -44,8 +44,9 @@ sealed interface CryptoFeedUiState {
     ) : CryptoFeedUiState
 }
 
-class CryptoFeedViewModel constructor(
-    private val cryptoFeedLoader: CryptoFeedLoader,
+@HiltViewModel
+class CryptoFeedViewModel @Inject constructor(
+    @CompositeLoader private val cryptoFeedLoader: CryptoFeedLoader,
 ) : ViewModel() {
 
     private val viewModelState = MutableStateFlow<CryptoFeedUiState>(CryptoFeedUiState.Initial)

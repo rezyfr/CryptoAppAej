@@ -1,6 +1,6 @@
 package com.rezyfr.cryptoapp.http
 
-import com.rezyfr.cryptoapp.data.RemoteRootCryptoFeed
+import com.rezyfr.cryptoapp.data.model.RemoteRootCryptoFeed
 import retrofit2.http.GET
 import retrofit2.http.Query
 

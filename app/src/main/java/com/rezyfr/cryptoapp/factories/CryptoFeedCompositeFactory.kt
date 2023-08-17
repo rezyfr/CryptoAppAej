@@ -1,7 +1,7 @@
 package com.rezyfr.cryptoapp.factories
 
-import com.rezyfr.cryptoapp.domain.CryptoFeedRemoteWithLocalComposite
-import com.rezyfr.cryptoapp.http.CryptoFeedLoader
+import com.rezyfr.cryptoapp.domain.usecase.CryptoFeedRemoteWithLocalComposite
+import com.rezyfr.cryptoapp.domain.CryptoFeedLoader
 
 class CryptoFeedCompositeFactory {
     companion object {

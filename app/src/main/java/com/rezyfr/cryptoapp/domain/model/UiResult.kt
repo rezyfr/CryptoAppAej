@@ -1,4 +1,4 @@
-package com.rezyfr.cryptoapp.domain
+package com.rezyfr.cryptoapp.domain.model
 
 sealed class UiResult<T>(val data: T? = null, val throwable: Throwable? = null) {
     class Success<T>(data: T) : UiResult<T>(data)

@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.hilt.android)
     kotlin("kapt")
 }
 
@@ -77,6 +78,8 @@ dependencies {
     implementation(libs.navigation.runtime.ktx)
 
     implementation(libs.coil.compose)
-//    implementation(libs.accompanist.swiperefresh)
-//    kapt("com.google.dagger:dagger-compiler:2.43.2")
+
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation.compose)
+    kapt(libs.hilt.android.compiler)
 }

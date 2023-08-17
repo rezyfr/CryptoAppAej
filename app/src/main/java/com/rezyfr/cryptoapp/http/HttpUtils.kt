@@ -1,23 +1,5 @@
-package com.rezyfr.cryptoapp.http
-
-import com.rezyfr.cryptoapp.data.RemoteRootCryptoFeed
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import com.rezyfr.cryptoapp.http.HttpClientResult
 import retrofit2.HttpException
-
-interface RetrofitClient {
-    fun get(): Flow<HttpClientResult<RemoteRootCryptoFeed>>
-}
-
-class CryptoFeedHttpClient(
-    private val api: CryptoFeedService
-) : RetrofitClient {
-    override fun get(): Flow<HttpClientResult<RemoteRootCryptoFeed>> = flow {
-        emit(execute { api.getCryptoFeed() })
-    }.flowOn(Dispatchers.IO)
-}
 
 suspend fun <T> execute(block: suspend () -> T): HttpClientResult<T> {
     return try {
@@ -37,6 +19,7 @@ suspend fun <T> execute(block: suspend () -> T): HttpClientResult<T> {
                     else -> HttpClientResult.Error(NetworkClientException("Unknown Error"))
                 }
             }
+
             else -> HttpClientResult.Error(throwable)
         }
     }

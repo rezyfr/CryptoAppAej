@@ -1,12 +1,12 @@
 package com.rezyfr.cryptoapp.factories
 
-import com.rezyfr.cryptoapp.domain.CryptoFeedRemoteUseCase
+import com.rezyfr.cryptoapp.domain.usecase.CryptoFeedRemoteUseCase
 
 class CryptoFeedRemoteUseCaseFactory {
     companion object {
         fun createCryptoFeedRemoteUseCase(): CryptoFeedRemoteUseCase {
             return CryptoFeedRemoteUseCase(
-                cryptoFeedHttpClient = CryptoFeedHttpClientFactory.createCryptoFeedHttpClient()
+                repository = CryptoFeedHttpClientFactory.createCryptoFeedHttpClient()
             )
         }
     }

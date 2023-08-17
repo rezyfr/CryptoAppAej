@@ -1,6 +1,10 @@
-package com.rezyfr.cryptoapp.domain
+package com.rezyfr.cryptoapp.domain.mapper
 
-import com.rezyfr.cryptoapp.data.RemoteCryptoFeedItem
+import com.rezyfr.cryptoapp.data.model.RemoteCryptoFeedItem
+import com.rezyfr.cryptoapp.domain.model.CoinInfo
+import com.rezyfr.cryptoapp.domain.model.CryptoFeed
+import com.rezyfr.cryptoapp.domain.model.Display
+import com.rezyfr.cryptoapp.domain.model.Usd
 
 class CryptoFeedItemsMapper {
     companion object {

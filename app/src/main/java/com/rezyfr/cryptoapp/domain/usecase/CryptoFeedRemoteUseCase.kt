@@ -1,16 +1,22 @@
-package com.rezyfr.cryptoapp.domain
+package com.rezyfr.cryptoapp.domain.usecase
 
-import com.rezyfr.cryptoapp.http.CryptoFeedHttpClient
-import com.rezyfr.cryptoapp.http.CryptoFeedLoader
+import com.rezyfr.cryptoapp.domain.CryptoFeedLoader
+import com.rezyfr.cryptoapp.domain.Result
+import com.rezyfr.cryptoapp.domain.mapper.CryptoFeedItemsMapper
+import com.rezyfr.cryptoapp.domain.model.InvalidData
+import com.rezyfr.cryptoapp.domain.model.NoConnectivity
+import com.rezyfr.cryptoapp.domain.model.UiResult
+import com.rezyfr.cryptoapp.domain.model.UnexpectedValueRepresentation
+import com.rezyfr.cryptoapp.domain.repository.CryptoFeedRepository
 import com.rezyfr.cryptoapp.http.HttpClientResult
-import com.rezyfr.cryptoapp.http.Result
 import kotlinx.coroutines.flow.channelFlow
+import javax.inject.Inject
 
-class CryptoFeedRemoteUseCase (
-    private val cryptoFeedHttpClient: CryptoFeedHttpClient
+class CryptoFeedRemoteUseCase @Inject constructor(
+    private val repository: CryptoFeedRepository
 ) : CryptoFeedLoader {
     override fun load(): Result  = channelFlow {
-        cryptoFeedHttpClient.get().collect { result ->
+        repository.get().collect { result ->
             when (result) {
                 is HttpClientResult.Success -> {
                     val cryptoFeed = result.data?.data

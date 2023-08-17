@@ -1,11 +1,13 @@
-package com.rezyfr.cryptoapp.domain
+package com.rezyfr.cryptoapp.domain.usecase
 
-import com.rezyfr.cryptoapp.http.CryptoFeedLoader
-import com.rezyfr.cryptoapp.http.Result
+import com.rezyfr.cryptoapp.domain.model.UiResult
+import com.rezyfr.cryptoapp.domain.CryptoFeedLoader
+import com.rezyfr.cryptoapp.domain.Result
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
+import javax.inject.Inject
 
-class CryptoFeedRemoteWithLocalComposite (
+class CryptoFeedRemoteWithLocalComposite @Inject constructor(
     private val primary: CryptoFeedLoader,
     private val fallback: CryptoFeedLoader
 ) : CryptoFeedLoader {

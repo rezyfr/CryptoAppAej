@@ -13,7 +13,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.rezyfr.cryptoapp.navigation.MainAppNavHost
 import com.rezyfr.cryptoapp.theme.CryptoAppTheme
 import com.rezyfr.cryptoapp.ui.CryptoFeedRoute
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,19 +30,5 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-    }
-}
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    CryptoAppTheme {
-        Greeting("Android")
     }
 }

@@ -1,4 +1,4 @@
-package com.rezyfr.cryptoapp.data
+package com.rezyfr.cryptoapp.data.model
 
 import com.squareup.moshi.Json
 

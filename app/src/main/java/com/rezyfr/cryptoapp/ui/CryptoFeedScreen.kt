@@ -17,8 +17,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.rezyfr.cryptoapp.domain.CryptoFeed
+import com.rezyfr.cryptoapp.domain.model.CryptoFeed
 import com.rezyfr.cryptoapp.presentation.CryptoFeedUiState
 import com.rezyfr.cryptoapp.presentation.CryptoFeedViewModel
 import com.rezyfr.cryptoapp.ui.components.CryptoFeedList
@@ -27,7 +28,7 @@ const val cryptoFeedRoute = "crypto_feed_route"
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CryptoFeedRoute(
-    viewModel: CryptoFeedViewModel = viewModel(factory = CryptoFeedViewModel.Factory),
+    viewModel: CryptoFeedViewModel = hiltViewModel(),
     onNavigateToCryptoDetails: (CryptoFeed) -> Unit
 ) {
     val cryptoFeedResult by viewModel.cryptoFeedUiState.collectAsState()
