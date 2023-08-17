@@ -2,19 +2,14 @@ package com.rezyfr.cryptoapp.presentation
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
+import com.rezyfr.cryptoapp.domain.CryptoFeedLoader
+import com.rezyfr.cryptoapp.domain.di.CompositeLoader
 import com.rezyfr.cryptoapp.domain.model.CryptoFeed
 import com.rezyfr.cryptoapp.domain.model.InvalidData
 import com.rezyfr.cryptoapp.domain.model.NoConnectivity
 import com.rezyfr.cryptoapp.domain.model.UiResult
 import com.rezyfr.cryptoapp.domain.model.UnexpectedValueRepresentation
-import com.rezyfr.cryptoapp.factories.CryptoFeedCompositeFactory
-import com.rezyfr.cryptoapp.factories.CryptoFeedRemoteUseCaseFactory
-import com.rezyfr.cryptoapp.domain.CryptoFeedLoader
-import com.rezyfr.cryptoapp.domain.di.CompositeLoader
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -80,20 +75,6 @@ class CryptoFeedViewModel @Inject constructor(
                         is UiResult.Success -> CryptoFeedUiState.HasCryptoFeed(cryptoFeed = result.data.orEmpty(), isLoading = false)
                     }
                 }
-            }
-        }
-    }
-
-
-    companion object {
-        val Factory: ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                CryptoFeedViewModel(
-                    cryptoFeedLoader = CryptoFeedCompositeFactory.createCryptoFeedLoaderWithFallback(
-                        primary = CryptoFeedRemoteUseCaseFactory.createCryptoFeedRemoteUseCase(),
-                        fallback = CryptoFeedRemoteUseCaseFactory.createCryptoFeedRemoteUseCase()
-                    )
-                )
             }
         }
     }
