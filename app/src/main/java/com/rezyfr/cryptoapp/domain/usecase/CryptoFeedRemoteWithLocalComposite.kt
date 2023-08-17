@@ -1,7 +1,7 @@
 package com.rezyfr.cryptoapp.domain.usecase
 
 import com.rezyfr.cryptoapp.domain.model.UiResult
-import com.rezyfr.cryptoapp.domain.CryptoFeedLoader
+import com.rezyfr.cryptoapp.domain.source.CryptoFeedLoader
 import com.rezyfr.cryptoapp.domain.Result
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest

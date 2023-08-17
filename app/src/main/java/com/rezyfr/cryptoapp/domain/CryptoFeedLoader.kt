@@ -6,6 +6,3 @@ import kotlinx.coroutines.flow.Flow
 
 typealias Result = Flow<UiResult<List<CryptoFeed>>>
 
-interface CryptoFeedLoader {
-    fun load(): Result
-}

@@ -3,7 +3,7 @@ package com.rezyfr.cryptoapp.presentation
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rezyfr.cryptoapp.domain.CryptoFeedLoader
+import com.rezyfr.cryptoapp.domain.source.CryptoFeedLoader
 import com.rezyfr.cryptoapp.domain.di.CompositeLoader
 import com.rezyfr.cryptoapp.domain.model.CryptoFeed
 import com.rezyfr.cryptoapp.domain.model.InvalidData

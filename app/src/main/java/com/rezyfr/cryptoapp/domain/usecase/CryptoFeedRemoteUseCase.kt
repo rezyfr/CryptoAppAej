@@ -1,8 +1,9 @@
 package com.rezyfr.cryptoapp.domain.usecase
 
-import com.rezyfr.cryptoapp.domain.CryptoFeedLoader
+import com.rezyfr.cryptoapp.domain.source.CryptoFeedLoader
 import com.rezyfr.cryptoapp.domain.Result
 import com.rezyfr.cryptoapp.domain.mapper.CryptoFeedItemsMapper
+import com.rezyfr.cryptoapp.domain.model.CryptoFeed
 import com.rezyfr.cryptoapp.domain.model.InvalidData
 import com.rezyfr.cryptoapp.domain.model.NoConnectivity
 import com.rezyfr.cryptoapp.domain.model.UiResult
@@ -16,12 +17,15 @@ class CryptoFeedRemoteUseCase @Inject constructor(
     private val repository: CryptoFeedRepository
 ) : CryptoFeedLoader {
     override fun load(): Result  = channelFlow {
-        repository.get().collect { result ->
+        repository.getFromRemote().collect { result ->
             when (result) {
                 is HttpClientResult.Success -> {
                     val cryptoFeed = result.data?.data
                     if (!cryptoFeed.isNullOrEmpty()) {
-                        trySend(UiResult.Success(CryptoFeedItemsMapper.map(cryptoFeed)))
+                        CryptoFeedItemsMapper.mapRemoteToDomain(cryptoFeed).also {
+                            insertToLocalDb(it)
+                            trySend(UiResult.Success(it))
+                        }
                     } else {
                         trySend(UiResult.Empty())
                     }
@@ -40,9 +44,17 @@ class CryptoFeedRemoteUseCase @Inject constructor(
                         is InvalidData -> {
                             trySend(UiResult.Error(InvalidData()))
                         }
+
+                        else -> {
+                            trySend(UiResult.Error(result.throwable ?: Throwable("Unkonwn error")))
+                        }
                     }
                 }
             }
         }
+    }
+
+    private suspend fun insertToLocalDb(feed: List<CryptoFeed>) {
+        repository.insertAll(*CryptoFeedItemsMapper.mapToEntity(feed).toTypedArray())
     }
 }
