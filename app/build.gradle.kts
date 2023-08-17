@@ -77,6 +77,10 @@ dependencies {
     implementation(libs.navigation.compose)
     implementation(libs.navigation.runtime.ktx)
 
+    implementation(libs.room.ktx)
+    implementation(libs.room.runtime)
+    kapt(libs.room.compiler)
+
     implementation(libs.coil.compose)
 
     implementation(libs.hilt.android)
