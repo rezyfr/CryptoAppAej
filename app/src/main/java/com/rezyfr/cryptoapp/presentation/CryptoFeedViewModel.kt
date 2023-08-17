@@ -12,6 +12,7 @@ import com.rezyfr.cryptoapp.domain.UiResult
 import com.rezyfr.cryptoapp.factories.CryptoFeedCompositeFactory
 import com.rezyfr.cryptoapp.factories.CryptoFeedRemoteUseCaseFactory
 import com.rezyfr.cryptoapp.http.CryptoFeedLoader
+import com.rezyfr.cryptoapp.presentation.CryptoFeedUiState.Initial.isLoading
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
@@ -24,6 +25,10 @@ sealed interface CryptoFeedUiState {
     val isLoading: Boolean
     val failed: String
 
+    object Initial : CryptoFeedUiState {
+        override val isLoading: Boolean = true
+        override val failed: String = ""
+    }
     data class HasCryptoFeed(
         val cryptoFeed: List<CryptoFeed>,
         override val isLoading: Boolean = false,
@@ -36,42 +41,16 @@ sealed interface CryptoFeedUiState {
     ) : CryptoFeedUiState
 }
 
-data class CryptoFeedViewModelState(
-    val isLoading: Boolean = false,
-    val cryptoFeed: List<CryptoFeed> = emptyList(),
-    val failed: String = ""
-) {
-    fun toCryptoFeedUiState() : CryptoFeedUiState {
-        return if (cryptoFeed.isNotEmpty()) {
-            CryptoFeedUiState.HasCryptoFeed(
-                cryptoFeed = cryptoFeed,
-                isLoading = isLoading,
-                failed = failed
-            )
-        } else {
-            CryptoFeedUiState.NoCryptoFeed(
-                isLoading = isLoading,
-                failed = failed
-            )
-        }
-    }
-}
-
 class CryptoFeedViewModel constructor(
     private val cryptoFeedLoader: CryptoFeedLoader,
 ) : ViewModel() {
 
-    private val viewModelState = MutableStateFlow(
-        CryptoFeedViewModelState(
-            isLoading = true
-        )
-    )
+    private val viewModelState = MutableStateFlow<CryptoFeedUiState>(CryptoFeedUiState.Initial)
 
-    val cryptoFeedUiState = viewModelState.map(CryptoFeedViewModelState::toCryptoFeedUiState)
-        .stateIn(
+    val cryptoFeedUiState = viewModelState.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = viewModelState.value.toCryptoFeedUiState()
+            initialValue = CryptoFeedUiState.Initial
         )
 
     init {
@@ -84,10 +63,10 @@ class CryptoFeedViewModel constructor(
                 Log.d("CryptoFeed", "$result")
                 viewModelState.update {
                     when (result) {
-                        is UiResult.Loading -> it.copy(isLoading = true)
-                        is UiResult.Empty -> it.copy(cryptoFeed = emptyList(), isLoading = false)
-                        is UiResult.Error -> it.copy(failed = result.throwable?.message.orEmpty(), isLoading = false)
-                        is UiResult.Success -> it.copy(cryptoFeed = result.data.orEmpty(), isLoading = false)
+                        is UiResult.Loading -> CryptoFeedUiState.Initial
+                        is UiResult.Empty -> CryptoFeedUiState.NoCryptoFeed(isLoading = false, failed = "Empty")
+                        is UiResult.Error -> CryptoFeedUiState.NoCryptoFeed(isLoading = false, failed = result.throwable?.message.orEmpty())
+                        is UiResult.Success -> CryptoFeedUiState.HasCryptoFeed(cryptoFeed = result.data.orEmpty(), isLoading = false)
                     }
                 }
             }

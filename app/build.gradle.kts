@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-
+    kotlin("kapt")
 }
 
 android {
@@ -28,11 +28,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -57,6 +57,7 @@ dependencies {
     implementation(libs.ui.tooling)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
+    implementation(libs.material)
     implementation(platform(libs.compose.bom))
     testImplementation(libs.junit)
     testImplementation(libs.ext.junit)
@@ -76,4 +77,6 @@ dependencies {
     implementation(libs.navigation.runtime.ktx)
 
     implementation(libs.coil.compose)
+//    implementation(libs.accompanist.swiperefresh)
+//    kapt("com.google.dagger:dagger-compiler:2.43.2")
 }

@@ -31,6 +31,7 @@ fun CryptoFeedList(
     cryptoFeed: List<CryptoFeed>,
     navigateToDetails: (CryptoFeed) -> Unit,
 ) {
+
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()

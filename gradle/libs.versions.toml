@@ -52,6 +52,7 @@ ui = { group = "androidx.compose.ui", name = "ui" }
 ui-graphics= { group = "androidx.compose.ui", name = "ui-graphics" }
 ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 material3 = { group = "androidx.compose.material3", name = "material3" }
+material = { group = "androidx.compose.material", name = "material" }
 ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose" }
 lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose" }
