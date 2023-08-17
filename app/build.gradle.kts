@@ -74,4 +74,6 @@ dependencies {
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.navigation.compose)
     implementation(libs.navigation.runtime.ktx)
+
+    implementation(libs.coil.compose)
 }

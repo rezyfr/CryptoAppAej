@@ -1,6 +1,5 @@
 package com.rezyfr.cryptoapp.factories
 
-import android.content.Context
 import com.rezyfr.cryptoapp.domain.CryptoFeedRemoteWithLocalComposite
 import com.rezyfr.cryptoapp.http.CryptoFeedLoader
 

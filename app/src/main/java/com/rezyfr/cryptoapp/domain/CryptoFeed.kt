@@ -9,6 +9,7 @@ data class CoinInfo(
     val id: String,
     val name: String,
     val fullName: String,
+    val imageUrl: String
 )
 
 data class Display(
@@ -17,5 +18,5 @@ data class Display(
 
 data class Usd(
     val price: Double,
-    val changePctDay: Long
+    val changePctDay: Float
 )

@@ -12,7 +12,8 @@ class CryptoFeedItemsMapper {
                     coinInfo = CoinInfo(
                         id = remoteCryptoFeedItem.coinInfo.id,
                         name = remoteCryptoFeedItem.coinInfo.name,
-                        fullName = remoteCryptoFeedItem.coinInfo.fullName
+                        fullName = remoteCryptoFeedItem.coinInfo.fullName,
+                        imageUrl = remoteCryptoFeedItem.coinInfo.imageUrl
                     ),
                     display = Display(
                         usd = Usd(

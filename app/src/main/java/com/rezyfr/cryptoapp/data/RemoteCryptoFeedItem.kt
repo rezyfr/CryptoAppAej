@@ -10,7 +10,7 @@ data class RemoteRootCryptoFeed(
 data class RemoteCryptoFeedItem(
     @Json(name = "CoinInfo")
     val coinInfo: RemoteCoinInfo,
-    @Json(name = "DISPLAY")
+    @Json(name = "RAW")
     val raw: RemoteDisplay
 )
 
@@ -20,7 +20,9 @@ data class RemoteCoinInfo(
     @Json(name = "Name")
     val name: String,
     @Json(name = "FullName")
-    val fullName: String
+    val fullName: String,
+    @Json(name = "ImageUrl")
+    val imageUrl: String
 )
 
 data class RemoteDisplay (
@@ -32,5 +34,5 @@ data class RemoteUsd(
     @Json(name = "PRICE")
     val price: Double,
     @Json(name = "CHANGEPCTDAY")
-    val changePctDay: Long
+    val changePctDay: Float
 )

@@ -81,6 +81,7 @@ class CryptoFeedViewModel constructor(
     fun refreshCryptoFeed() {
         viewModelScope.launch {
             cryptoFeedLoader.load().collectLatest { result ->
+                Log.d("CryptoFeed", "$result")
                 viewModelState.update {
                     when (result) {
                         is UiResult.Loading -> it.copy(isLoading = true)

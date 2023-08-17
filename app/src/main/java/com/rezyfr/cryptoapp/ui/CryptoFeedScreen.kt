@@ -8,6 +8,7 @@ import com.rezyfr.cryptoapp.domain.CryptoFeed
 import com.rezyfr.cryptoapp.domain.UiResult
 import com.rezyfr.cryptoapp.presentation.CryptoFeedUiState
 import com.rezyfr.cryptoapp.presentation.CryptoFeedViewModel
+import com.rezyfr.cryptoapp.ui.components.CryptoFeedList
 
 const val cryptoFeedRoute = "crypto_feed_route"
 
@@ -30,7 +31,11 @@ fun CryptoFeedScreen(
 ) {
     when (cryptoFeedResult) {
         is CryptoFeedUiState.HasCryptoFeed -> {
-            Log.d("CryptoFeedScreen", "Has crypto feed, ${cryptoFeedResult.cryptoFeed}")
+            Log.d("CryptoFeedScreen", "Has crypto feed ${cryptoFeedResult.cryptoFeed}")
+            CryptoFeedList(
+                cryptoFeed = cryptoFeedResult.cryptoFeed,
+                navigateToDetails = onNavigateToCryptoDetails
+            )
         }
         is CryptoFeedUiState.NoCryptoFeed -> {
             Log.d("CryptoFeedScreen", "No crypto feed")
