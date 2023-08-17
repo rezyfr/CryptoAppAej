@@ -8,7 +8,10 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.rezyfr.cryptoapp.domain.CryptoFeed
 import com.rezyfr.cryptoapp.domain.CryptoFeedRemoteUseCase
+import com.rezyfr.cryptoapp.domain.InvalidData
+import com.rezyfr.cryptoapp.domain.NoConnectivity
 import com.rezyfr.cryptoapp.domain.UiResult
+import com.rezyfr.cryptoapp.domain.UnexpectedValueRepresentation
 import com.rezyfr.cryptoapp.factories.CryptoFeedCompositeFactory
 import com.rezyfr.cryptoapp.factories.CryptoFeedRemoteUseCaseFactory
 import com.rezyfr.cryptoapp.http.CryptoFeedLoader
@@ -65,7 +68,14 @@ class CryptoFeedViewModel constructor(
                     when (result) {
                         is UiResult.Loading -> CryptoFeedUiState.Initial
                         is UiResult.Empty -> CryptoFeedUiState.NoCryptoFeed(isLoading = false, failed = "Empty")
-                        is UiResult.Error -> CryptoFeedUiState.NoCryptoFeed(isLoading = false, failed = result.throwable?.message.orEmpty())
+                        is UiResult.Error -> CryptoFeedUiState.NoCryptoFeed(isLoading = false,
+                            failed = when(result.throwable) {
+                                is NoConnectivity -> "No Connectivity"
+                                is InvalidData -> "Invalid Data"
+                                is UnexpectedValueRepresentation -> "Unexpected Value Representation"
+                                else -> "Unknown Error"
+                            }
+                        )
                         is UiResult.Success -> CryptoFeedUiState.HasCryptoFeed(cryptoFeed = result.data.orEmpty(), isLoading = false)
                     }
                 }
